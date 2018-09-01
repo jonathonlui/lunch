@@ -1,16 +1,33 @@
 import React from 'react';
+import './index.css';
+
+
+const LunchItem = ({ lunch: { id, name, price } }) => (
+  <li className="LunchItem">
+    <div>{name || id}</div>
+    <div>{price || '-'}</div>
+  </li>
+);
+
+
+const NoLunches = () => (
+  <li>No lunches</li>
+);
+
+
+const LunchesLoading = () => (
+  <li>Loading...</li>
+);
 
 
 const LunchList = ({ lunches, isLoading }) => (
   <ul>
     {
-      lunches.length < 1
-        ? !isLoading && <li>No lunches</li>
-        : lunches.map(({ id, name }) => (
-          <li key={id}>{name || id}</li>
-        ))
+      lunches.length < 1 && !isLoading
+        ? <NoLunches />
+        : lunches.map(lunch => <LunchItem key={lunch.id} lunch={lunch} />)
     }
-    {isLoading ? <li>Loading...</li> : null}
+    {isLoading && <LunchesLoading />}
   </ul>
 );
 
