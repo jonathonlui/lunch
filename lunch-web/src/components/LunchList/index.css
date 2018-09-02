@@ -46,3 +46,7 @@
   flex: 0;
   text-align: right;
 }
+
+.Address {
+  margin: 1em 0 0.5em;
+}

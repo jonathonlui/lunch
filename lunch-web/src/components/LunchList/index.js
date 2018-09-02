@@ -47,12 +47,27 @@ const LunchItemPriceRange = ({ meals }) => {
 };
 
 
+const Address = ({ address }) => (address
+  ? (
+    <div className="Address">
+      <span>{address}</span>
+      {' '}
+      <a href={`https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${encodeURIComponent(address)}`}>Google Maps</a>
+      {' '}
+      <a href={`https://maps.apple.com/?dirflg=w&daddr=${encodeURIComponent(address)}`}>Apple Maps</a>
+    </div>
+  )
+  : null
+);
+
+
 const LunchItem = ({
   lunch: {
     id,
     name,
     description,
     meals,
+    address,
     yelpLink,
   },
 }) => (
@@ -61,6 +76,7 @@ const LunchItem = ({
     <LunchItemPriceRange meals={meals} />
     {description && <div className="LunchItemDescription">{description}</div>}
     <MealList meals={meals} />
+    <Address address={address} />
     <div className="LunchItemFooter">
       {yelpLink && <a href={yelpLink}>Yelp</a>}
     </div>
