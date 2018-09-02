@@ -12,8 +12,8 @@ function toCurrency(value, defaultValue, { locale = 'en-US', currency = 'USD' } 
 
 const MealItem = ({ meal: { name, price } }) => (
   <li className="MealItem">
-    <span>{name}</span>
-    <span>{toCurrency(price)}</span>
+    <span className="MealItemName">{name}</span>
+    <span className="MealItemPrice">{toCurrency(price)}</span>
   </li>
 );
 
