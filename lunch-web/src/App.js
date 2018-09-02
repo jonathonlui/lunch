@@ -34,13 +34,15 @@ class App extends Component {
       <div className="App">
         <h1>Lunch in DTLA</h1>
         <LunchList lunches={lunches} isLoading={isLoading} />
-        <button
-          type="button"
-          disabled={isLoading}
-          onClick={this.reloadLunches}
-        >
-          Refresh
-        </button>
+        <div className="AppFooter">
+          <button
+            type="button"
+            disabled={isLoading}
+            onClick={this.reloadLunches}
+          >
+            Refresh
+          </button>
+        </div>
       </div>
     );
   }

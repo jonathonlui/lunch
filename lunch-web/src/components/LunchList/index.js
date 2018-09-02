@@ -69,12 +69,12 @@ const LunchItem = ({
 
 
 const NoLunches = () => (
-  <li>No lunches</li>
+  <li className="LunchItem">No lunches</li>
 );
 
 
 const LunchesLoading = () => (
-  <li>Loading...</li>
+  <li className="LunchItem">Loading lunches...</li>
 );
 
 
