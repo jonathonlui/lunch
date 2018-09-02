@@ -53,6 +53,7 @@ const LunchItem = ({
     name,
     description,
     meals,
+    yelpLink,
   },
 }) => (
   <li className="LunchItem">
@@ -60,6 +61,9 @@ const LunchItem = ({
     <LunchItemPriceRange meals={meals} />
     {description && <div className="LunchItemDescription">{description}</div>}
     <MealList meals={meals} />
+    <div className="LunchItemFooter">
+      {yelpLink && <a href={yelpLink}>Yelp</a>}
+    </div>
   </li>
 );
 

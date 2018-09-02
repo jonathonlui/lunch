@@ -18,8 +18,12 @@
   margin-bottom: 0.5em;
 }
 
+.LunchItemFooter {
+  font-size: 0.75em;
+}
 
 .LunchItemMealList {
+  margin-bottom: 0.5em;
 }
 
 .MealItem {
