@@ -32,6 +32,7 @@ class App extends Component {
     const { isLoading, lunches } = this.state;
     return (
       <div className="App">
+        <h1>Lunch in DTLA</h1>
         <LunchList lunches={lunches} isLoading={isLoading} />
         <button
           type="button"

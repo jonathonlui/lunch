@@ -10,3 +10,9 @@ body{
   max-width: 600px;
   font-size: 18px;
 }
+
+.App > h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0.75em 0.5em;
+}
