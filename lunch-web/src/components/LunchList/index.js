@@ -2,10 +2,64 @@ import React from 'react';
 import './index.css';
 
 
-const LunchItem = ({ lunch: { id, name, price } }) => (
+function toCurrency(value, defaultValue, { locale = 'en-US', currency = 'USD' } = {}) {
+  if (!Number.isFinite(value)) {
+    return defaultValue;
+  }
+  return value.toLocaleString(locale, { style: 'currency', currency });
+}
+
+
+const MealItem = ({ meal: { name, price } }) => (
+  <li className="MealItem">
+    <span>{name}</span>
+    <span>{toCurrency(price)}</span>
+  </li>
+);
+
+
+const MealList = ({ meals }) => (
+  meals && meals.length
+    ? (
+      <ul className="LunchItemMealList">
+        {meals.map(meal => <MealItem key={meal.id || meal.name} meal={meal} />)}
+      </ul>
+    ) : null
+);
+
+
+const LunchItemPriceRange = ({ meals }) => {
+  if (!meals || meals.length < 1) {
+    return null;
+  }
+  const prices = meals.map(({ price }) => price).sort((a, b) => a - b);
+  const low = prices[0];
+  const high = prices.slice(-1)[0];
+  const rangeString = low === high
+    ? toCurrency(low)
+    : `${toCurrency(low)} - ${toCurrency(high)}`;
+
+  return (
+    <div className="LunchItemPriceRange">
+      {rangeString}
+    </div>
+  );
+};
+
+
+const LunchItem = ({
+  lunch: {
+    id,
+    name,
+    description,
+    meals,
+  },
+}) => (
   <li className="LunchItem">
-    <div>{name || id}</div>
-    <div>{price || '-'}</div>
+    <div className="LunchItemName">{name || id}</div>
+    <LunchItemPriceRange meals={meals} />
+    {description && <div className="LunchItemDescription">{description}</div>}
+    <MealList meals={meals} />
   </li>
 );
 

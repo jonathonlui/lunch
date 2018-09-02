@@ -20,7 +20,10 @@ class App extends Component {
 
   reloadLunches = async () => {
     this.setState({ isLoading: true });
-    const { docs } = await db.collection('lunches').get();
+    const { docs } = await db
+      .collection('lunches')
+      .where('meals', '>', []) // Only get lunches that have meals
+      .get();
     const lunches = docs.map(doc => ({ id: doc.id, ...doc.data() }));
     this.setState({ isLoading: false, lunches });
   };
