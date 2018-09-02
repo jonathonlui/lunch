@@ -21,6 +21,14 @@
 .LunchItemFooter {
   font-size: 0.75em;
 }
+.LunchItemFooter a {
+  margin-right: 0.5em;
+  padding: 0.5em 0;
+}
+
+.LunchItemFooterAddress {
+  margin-bottom: 0.5em;
+}
 
 .LunchItemMealList {
   margin-bottom: 0.5em;
@@ -45,8 +53,4 @@
 .MealItemPrice {
   flex: 0;
   text-align: right;
-}
-
-.Address {
-  margin: 1em 0 0.5em;
 }
