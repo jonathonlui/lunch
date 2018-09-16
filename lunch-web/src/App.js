@@ -4,7 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 
@@ -34,11 +37,26 @@ class App extends Component {
     this.state = {
       isLoading: true,
       lunches: [],
+      showServiceWorkerUpdatedSnackbar: null,
     };
   }
 
   componentDidMount() {
     this.reloadLunches();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(props, state);
+    if (props.serviceWorkerUpdated && state.showServiceWorkerUpdatedSnackbar === null) {
+      return {
+        showServiceWorkerUpdatedSnackbar: true,
+      };
+    }
+    return null;
+  }
+
+  closeSnackbar = () => {
+    this.setState({ showServiceWorkerUpdatedSnackbar: false });
   }
 
   reloadLunches = async () => {
@@ -53,7 +71,7 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const { isLoading, lunches } = this.state;
+    const { isLoading, lunches, showServiceWorkerUpdatedSnackbar } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
@@ -76,6 +94,26 @@ class App extends Component {
           <LunchList lunches={lunches} isLoading={isLoading} />
 
         </div>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={showServiceWorkerUpdatedSnackbar}
+          message={(
+            <span>
+              App updated.
+              {' '}
+              <Button color="inherit" onClick={() => window.location.reload()}>
+                Reload App
+              </Button>
+              <IconButton
+                aria-label="Close"
+                color="inherit"
+                onClick={this.closeSnackbar}
+              >
+                <CloseIcon />
+              </IconButton>
+            </span>
+          )}
+        />
       </React.Fragment>
     );
   }
