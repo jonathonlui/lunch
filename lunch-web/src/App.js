@@ -46,7 +46,6 @@ class App extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    console.log(props, state);
     if (props.serviceWorkerUpdated && state.showServiceWorkerUpdatedSnackbar === null) {
       return {
         showServiceWorkerUpdatedSnackbar: true,
