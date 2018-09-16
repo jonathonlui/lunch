@@ -1,20 +1,4 @@
-.LunchItem {
-  margin-bottom: 0.5em;
-  border: 1px solid #aaa;
-  padding: 1em;
-}
-
-.LunchItemName {
-  font-weight: bold;
-  font-size: 1.25em;
-  margin-bottom: 0.5em;
-}
-
 .LunchItemPriceRange {
-  margin-bottom: 0.5em;
-}
-
-.LunchItemDescription {
   margin-bottom: 0.5em;
 }
 
