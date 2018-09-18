@@ -4,10 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 
@@ -32,30 +30,13 @@ const styles = theme => ({
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      lunches: [],
-      showServiceWorkerUpdatedSnackbar: null,
-    };
-  }
+  state = {
+    isLoading: true,
+    lunches: [],
+  };
 
   componentDidMount() {
     this.reloadLunches();
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    if (props.serviceWorkerUpdated && state.showServiceWorkerUpdatedSnackbar === null) {
-      return {
-        showServiceWorkerUpdatedSnackbar: true,
-      };
-    }
-    return null;
-  }
-
-  closeSnackbar = () => {
-    this.setState({ showServiceWorkerUpdatedSnackbar: false });
   }
 
   reloadLunches = async () => {
@@ -69,8 +50,8 @@ class App extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { isLoading, lunches, showServiceWorkerUpdatedSnackbar } = this.state;
+    const { classes, serviceWorkerUpdated } = this.props;
+    const { isLoading, lunches } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
@@ -95,22 +76,16 @@ class App extends Component {
         </div>
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={showServiceWorkerUpdatedSnackbar}
+          open={serviceWorkerUpdated}
           message={(
             <span>
               App updated.
-              {' '}
-              <Button color="inherit" onClick={() => window.location.reload()}>
-                Reload App
-              </Button>
-              <IconButton
-                aria-label="Close"
-                color="inherit"
-                onClick={this.closeSnackbar}
-              >
-                <CloseIcon />
-              </IconButton>
             </span>
+          )}
+          action={(
+            <Button color="inherit" onClick={() => window.location.reload()}>
+              Reload App
+            </Button>
           )}
         />
       </React.Fragment>

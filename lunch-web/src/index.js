@@ -6,12 +6,9 @@ import registerServiceWorker from './registerServiceWorker';
 
 
 class ServiceWorkerUpdate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      serviceWorkerUpdated: false,
-    };
-  }
+  state = {
+    serviceWorkerUpdated: false,
+  };
 
   componentDidMount() {
     registerServiceWorker().then(({ updated } = {}) => (
