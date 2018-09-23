@@ -8,8 +8,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
-
-import { db } from './firebase';
+import { getLunches } from './database';
 
 import LunchList from './components/LunchList';
 
@@ -34,16 +33,12 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.reloadLunches();
+    this.refresh();
   }
 
-  reloadLunches = async () => {
+  refresh = async () => {
     this.setState({ isLoading: true });
-    const { docs } = await db
-      .collection('lunches')
-      .where('meals', '>', []) // Only get lunches that have meals
-      .get();
-    const lunches = docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const lunches = await getLunches();
     this.setState({ isLoading: false, lunches });
   };
 
@@ -56,7 +51,7 @@ class App extends Component {
         <div className={classes.App}>
           <Typography variant="display3" gutterBottom>
             Lunch
-            <Button disabled={isLoading} onClick={this.reloadLunches}>
+            <Button disabled={isLoading} onClick={this.refresh}>
               {isLoading
                 ? <CircularProgress size={24} />
                 : (
