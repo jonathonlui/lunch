@@ -131,6 +131,7 @@ const LunchList = ({ lunches, isLoading }) => (
         ? <Grid item xs={12}><NoLunches /></Grid>
         : lunches.map(lunch => (
           <Grid
+            key={lunch.id}
             item
             xs={12}
             sm={6}
