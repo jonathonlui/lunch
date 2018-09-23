@@ -4,6 +4,9 @@ import Map from 'pigeon-maps';
 import MapOverlay from 'pigeon-overlay';
 
 
+import { getPriceRangeString } from '../LunchCard';
+
+
 const toLatLng = ({ latitude, longitude }) => [latitude, longitude];
 
 
@@ -45,9 +48,16 @@ const LunchMap = ({
           />
         </MapOverlay>
       )}
-      {lunches.filter(({ location }) => location).map(({ id, location, name }) => (
+      {lunches.filter(({ location }) => location).map(({
+        id,
+        location,
+        name,
+        meals,
+      }) => (
         <MapOverlay key={id} anchor={toLatLng(location)} offset={[0, 8]}>
-          <div style={{ padding: 2, background: 'rgba(0, 250, 0, 0.3)' }}>
+          <div style={{ padding: 2, background: 'rgba(0, 250, 0, 0.6)' }}>
+            {getPriceRangeString(meals)}
+            {' '}
             {name}
           </div>
         </MapOverlay>
