@@ -16,9 +16,7 @@ import LunchList from './components/LunchList';
 
 const styles = theme => ({
   App: {
-    margin: '0 auto',
-    padding: 2 * theme.spacing.unit,
-    maxWidth: 600,
+    padding: 1 * theme.spacing.unit,
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     fontSize: '0.875rem',
     color: '#212121',

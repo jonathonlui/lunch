@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import placeholderImage4x3 from '../../assets/placeholder4x3.png';
@@ -14,7 +15,10 @@ import './index.css';
 
 const styles = theme => ({
   Card: {
-    marginBottom: 4 * theme.spacing.unit,
+  },
+  CardHeader: {
+  },
+  CardContent: {
   },
   Description: {
     marginBottom: 1.5 * theme.spacing.unit,
@@ -82,10 +86,14 @@ const LunchCard = withStyles(styles)(({
   },
   classes,
 }) => (
-  <Card component="li" className={classes.Card}>
-    <CardHeader title={name || id} subheader={getPriceRangeString(meals)} />
+  <Card className={classes.Card}>
+    <CardHeader
+      className={classes.CardHeader}
+      title={name || id}
+      subheader={getPriceRangeString(meals)}
+    />
     <CardMedia className={classes.image4x3} image={imageUrl} />
-    <CardContent>
+    <CardContent className={classes.CardContent}>
       {description && (
         <Typography variant="body1" className={classes.Description}>
           {description}
@@ -112,18 +120,29 @@ const LunchCard = withStyles(styles)(({
 
 
 const NoLunches = () => (
-  <li className="LunchItem">No lunches</li>
+  <div>No lunches</div>
 );
 
 
 const LunchList = ({ lunches, isLoading }) => (
-  <ul>
+  <Grid container spacing={16}>
     {
       lunches.length < 1 && !isLoading
-        ? <NoLunches />
-        : lunches.map(lunch => <LunchCard key={lunch.id} lunch={lunch} />)
+        ? <Grid item xs={12}><NoLunches /></Grid>
+        : lunches.map(lunch => (
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={6}
+            lg={4}
+            xl={3}
+          >
+            <LunchCard key={lunch.id} lunch={lunch} />
+          </Grid>
+        ))
     }
-  </ul>
+  </Grid>
 );
 
 
