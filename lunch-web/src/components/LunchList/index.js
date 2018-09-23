@@ -8,9 +8,18 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import LunchMap from '../LunchMap';
+
 import placeholderImage4x3 from '../../assets/placeholder4x3.png';
 
 import './index.css';
+
+
+const PADDING_TOP = {
+  '1x1': '100%',
+  '4x3': '75%',
+  '16x9': '56.25%',
+};
 
 
 const styles = theme => ({
@@ -25,16 +34,8 @@ const styles = theme => ({
   },
   image4x3: {
     height: 0,
-    paddingTop: '75%',
+    paddingTop: PADDING_TOP['4x3'],
   },
-  // image16x9: {
-  //   height: 0,
-  //   paddingTop: '56.25%',
-  // },
-  // image1x1: {
-  //   height: 0,
-  //   paddingTop: '100%',
-  // },
 });
 
 
@@ -124,8 +125,32 @@ const NoLunches = () => (
 );
 
 
-const LunchList = ({ lunches, isLoading }) => (
+const getLatLng = (position, { defaultValue } = {}) => {
+  if (position && position.coords) {
+    return [position.coords.latitude, position.coords.longitude];
+  }
+  return defaultValue;
+};
+
+
+const LunchList = ({ lunches, isLoading, currentPosition }) => (
   <Grid container spacing={16}>
+    <Grid item xs={12}>
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: 0,
+          paddingTop: PADDING_TOP['16x9'],
+        }}
+      >
+        <LunchMap
+          center={getLatLng(currentPosition, { defaultValue: [34.048569, -118.2528917] })}
+          zoom={16}
+          lunches={lunches}
+        />
+      </div>
+    </Grid>
     {
       lunches.length < 1 && !isLoading
         ? <Grid item xs={12}><NoLunches /></Grid>
