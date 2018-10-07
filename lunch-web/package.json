@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.0.3",
     "@material-ui/icons": "^3.0.1",
+    "debug": "^4.0.1",
     "firebase": "^5.4.2",
     "pigeon-maps": "^0.11.0",
     "pigeon-overlay": "^0.2.2",

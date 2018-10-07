@@ -74,8 +74,9 @@ const LunchCard = ({
     imageUrl = placeholderImage4x3,
   },
   classes,
+  style,
 }) => (
-  <Card className={classes.Card}>
+  <Card className={classes.Card} style={style}>
     <CardHeader
       className={classes.CardHeader}
       title={name || id}
