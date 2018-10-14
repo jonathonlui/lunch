@@ -6,11 +6,17 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
+
 import RefreshIcon from '@material-ui/icons/Refresh';
+import AddIcon from '@material-ui/icons/Add';
 
 import { getLunches } from './database';
 
 import LunchList from './components/LunchList';
+import SuggestionDialog from './components/SuggestionDialog';
+
+
+const debug = require('debug')('lunch:App');
 
 
 const styles = theme => ({
@@ -23,11 +29,17 @@ const styles = theme => ({
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
+  floatingActionButton: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  },
 });
 
 
 class App extends Component {
   state = {
+    addDialogOpen: false,
     isLoading: true,
     lunches: [],
   };
@@ -37,14 +49,24 @@ class App extends Component {
   }
 
   refresh = async () => {
+    debug('refresh');
     this.setState({ isLoading: true });
     const lunches = await getLunches();
     this.setState({ isLoading: false, lunches });
   };
 
+  openAddDialog = () => {
+    this.setState({ addDialogOpen: true });
+  };
+
+  closeAddDialog = () => {
+    debug('closeAddDialog');
+    this.setState({ addDialogOpen: false });
+  }
+
   render() {
     const { classes, serviceWorkerUpdated } = this.props;
-    const { isLoading, lunches } = this.state;
+    const { addDialogOpen, isLoading, lunches } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
@@ -65,7 +87,6 @@ class App extends Component {
           </Typography>
 
           <LunchList lunches={lunches} isLoading={isLoading} />
-
         </div>
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -81,6 +102,22 @@ class App extends Component {
             </Button>
           )}
         />
+
+        <React.Fragment>
+          <SuggestionDialog
+            open={addDialogOpen}
+            onClose={this.closeAddDialog}
+            onSubmit={this.submitSuggestion}
+          />
+          <Button
+            aria-label="Add"
+            variant="fab"
+            mini
+            className={classes.floatingActionButton}
+          >
+            <AddIcon onClick={this.openAddDialog} />
+          </Button>
+        </React.Fragment>
       </React.Fragment>
     );
   }

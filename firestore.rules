@@ -3,5 +3,8 @@ service cloud.firestore {
     match /lunches/{lunch} {
       allow read: if true;
     }
+    match /suggestions/{suggestion} {
+      allow create: if true;
+    }
   }
 }

@@ -8,7 +8,7 @@ import MapOverlay from 'pigeon-overlay';
 import { getPriceRangeString } from '../LunchCard';
 
 
-const debug = require('debug')('<LunchMap>');
+const debug = require('debug')('lunch:LunchMap');
 
 
 const toLatLng = ({ location: { latitude, longitude } }) => [latitude, longitude];
