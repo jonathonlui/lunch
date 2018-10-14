@@ -14,15 +14,7 @@ const NoLunches = () => (
 );
 
 
-const getLatLng = (position, { defaultValue } = {}) => {
-  if (position && position.coords) {
-    return [position.coords.latitude, position.coords.longitude];
-  }
-  return defaultValue;
-};
-
-
-const LunchList = ({ lunches, isLoading, currentPosition }) => (
+const LunchList = ({ lunches, isLoading }) => (
   <Grid container spacing={16}>
     <Grid item xs={12}>
       <div
@@ -33,11 +25,7 @@ const LunchList = ({ lunches, isLoading, currentPosition }) => (
           paddingTop: PADDING_TOP['16x9'],
         }}
       >
-        <LunchMap
-          center={getLatLng(currentPosition, { defaultValue: [34.048569, -118.2528917] })}
-          zoom={16}
-          lunches={lunches}
-        />
+        <LunchMap loading={isLoading} lunches={lunches} />
       </div>
     </Grid>
     {

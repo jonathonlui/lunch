@@ -1,8 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Map from 'pigeon-maps';
 import MapOverlay from 'pigeon-overlay';
+
+import MapCenterAndZoomToFit from '../MapCenterAndZoomToFit';
 
 
 import { getPriceRangeString } from '../LunchCard';
@@ -64,9 +67,26 @@ const LunchOverlayContents = ({
 class LunchMap extends React.Component {
   state = {
     selectedLunchId: null,
+    zoom: 16,
+    center: [34.048228325406804, -118.2508128624267],
+    locations: [],
   };
 
-  onBoundsChanged = ({ bounds, center, zoom }) => debug('onBoundsChanged', bounds, center, zoom);
+  static getDerivedStateFromProps(props) {
+    const { lunches } = props;
+    return {
+      locations: lunches.map(({ location }) => location),
+    };
+  }
+
+  onBoundsChanged = ({ bounds, center, zoom }) => {
+    debug('onBoundsChanged bounds: %o center: %o zoom: %o', bounds, center, zoom);
+    this.setState({ center, zoom });
+  }
+
+  onClick = ({ latLng, pixel }) => {
+    debug('onClick latLng: %o pixel: %o', latLng, pixel);
+  }
 
   onLunchClicked = (lunch) => {
     const {
@@ -82,14 +102,20 @@ class LunchMap extends React.Component {
     }
   };
 
+  onCenterZoom = ({ center, zoom }) => {
+    this.setState({ center, zoom });
+  }
+
   render() {
     const {
       lunches = [],
-      center,
       classes,
-      ...rest
+      loading = true,
     } = this.props;
     const {
+      locations,
+      center,
+      zoom,
       selectedLunchId,
     } = this.state;
     return (
@@ -100,14 +126,20 @@ class LunchMap extends React.Component {
           top: 0,
           width: '100%',
           height: '100%',
+          backgroundColor: '#ccc',
         }}
       >
         <Map
           center={center}
+          zoom={zoom}
           onBoundsChanged={this.onBoundsChanged}
-          {...rest}
+          onClick={this.onClick}
         >
-          {lunches.filter(({ location }) => location).map(lunch => (
+          <MapCenterAndZoomToFit
+            onCenterZoom={this.onCenterZoom}
+            locations={locations}
+          />
+          {lunches.map(lunch => (
             <MapOverlay
               key={lunch.id}
               anchor={toLatLng(lunch)}
@@ -124,6 +156,17 @@ class LunchMap extends React.Component {
             </MapOverlay>
           ))}
         </Map>
+        {loading && (
+          <LinearProgress
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              zIndex: 100,
+              width: '100%',
+            }}
+          />
+        )}
       </div>
     );
   }
