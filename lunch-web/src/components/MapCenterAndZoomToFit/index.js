@@ -3,7 +3,7 @@ import React from 'react';
 import geolib from 'geolib';
 
 
-const debug = require('debug')('lunch:MapCenterAndZoomToFit');
+const debug = require('debug/dist/debug')('lunch:MapCenterAndZoomToFit');
 
 
 export default class MapCenterAndZoomToFit extends React.Component {

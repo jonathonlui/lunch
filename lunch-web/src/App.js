@@ -16,7 +16,7 @@ import LunchList from './components/LunchList';
 import SuggestionDialog from './components/SuggestionDialog';
 
 
-const debug = require('debug')('lunch:App');
+const debug = require('debug/dist/debug')('lunch:App');
 
 
 const styles = theme => ({

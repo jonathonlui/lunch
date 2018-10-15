@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { addSuggestion } from '../../database';
 
 
-const debug = require('debug')('lunch:SuggestionDialog');
+const debug = require('debug/dist/debug')('lunch:SuggestionDialog');
 
 
 const styles = {

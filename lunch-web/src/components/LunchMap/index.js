@@ -11,7 +11,7 @@ import MapCenterAndZoomToFit from '../MapCenterAndZoomToFit';
 import { getPriceRangeString } from '../LunchCard';
 
 
-const debug = require('debug')('lunch:LunchMap');
+const debug = require('debug/dist/debug')('lunch:LunchMap');
 
 
 const toLatLng = ({ location: { latitude, longitude } }) => [latitude, longitude];

@@ -1,7 +1,7 @@
 import firebase, { db } from './firebase';
 
 
-const debug = require('debug')('lunch:database');
+const debug = require('debug/dist/debug')('lunch:database');
 
 
 export async function getLunches() {
