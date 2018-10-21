@@ -42,7 +42,7 @@ const styles = theme => ({
   },
   floatingActionButtons: {
     position: 'fixed',
-    bottom: theme.spacing.unit * 2,
+    bottom: theme.spacing.unit * 3,
     right: 0, // theme.spacing.unit * 2,
   },
   floatingActionButton: {
