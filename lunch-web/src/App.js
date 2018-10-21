@@ -129,8 +129,9 @@ class App extends Component {
             variant="fab"
             mini
             className={classes.floatingActionButton}
+            onClick={this.openAddDialog}
           >
-            <AddIcon onClick={this.openAddDialog} />
+            <AddIcon />
           </Button>
         </React.Fragment>
       </React.Fragment>
