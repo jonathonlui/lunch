@@ -57,8 +57,8 @@ const ReloadButton = withStyles(styles)(({
   ...buttonProps
 }) => (
   <Button disabled={isLoading} onClick={onClick} {...buttonProps}>
-    <RefreshIcon className={[classes.iconShadow, classes.leftIcon]} />
-    <span className={[classes.textShadow]}>Refresh</span>
+    <RefreshIcon className={[classes.iconShadow, classes.leftIcon].join(',')} />
+    <span className={classes.textShadow}>Refresh</span>
   </Button>
 ));
 
@@ -98,7 +98,7 @@ class App extends Component {
         <CssBaseline />
         <div className={classes.App}>
           <LunchMap lunches={lunches} isLoading={isLoading}>
-            <Typography className={[classes.textShadow]} variant="h2" gutterBottom>
+            <Typography className={classes.textShadow} variant="h2" gutterBottom>
               Lunch
               <ReloadButton isLoading={isLoading} onClick={this.refresh} />
             </Typography>
