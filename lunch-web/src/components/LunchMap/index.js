@@ -110,7 +110,7 @@ class LunchMap extends React.Component {
     const {
       lunches = [],
       classes,
-      loading = true,
+      isLoading,
     } = this.props;
     const {
       locations,
@@ -156,7 +156,7 @@ class LunchMap extends React.Component {
             </MapOverlay>
           ))}
         </Map>
-        {loading && (
+        {isLoading && (
           <LinearProgress
             style={{
               position: 'absolute',

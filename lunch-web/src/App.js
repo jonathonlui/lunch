@@ -10,9 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import AddIcon from '@material-ui/icons/Add';
 
+import { PADDING_TOP } from './constants';
+
 import { getLunches } from './database';
 
 import LunchList from './components/LunchList';
+import LunchMap from './components/LunchMap';
 import SuggestionDialog from './components/SuggestionDialog';
 
 
@@ -35,6 +38,20 @@ const styles = theme => ({
     right: theme.spacing.unit * 2,
   },
 });
+
+
+const WrappedMap = props => (
+  <div
+    style={{
+      position: 'relative',
+      width: '100%',
+      height: 0,
+      paddingTop: PADDING_TOP['16x9'],
+    }}
+  >
+    <LunchMap {...props} />
+  </div>
+);
 
 
 class App extends Component {
@@ -86,6 +103,7 @@ class App extends Component {
             </Button>
           </Typography>
 
+          <WrappedMap lunches={lunches} isLoading={isLoading} />
           <LunchList lunches={lunches} isLoading={isLoading} />
         </div>
         <Snackbar
