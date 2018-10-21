@@ -12,7 +12,7 @@ const NoLunches = () => (
 );
 
 
-const LunchList = ({ lunches, isLoading }) => (
+const LunchList = ({ lunches, isLoading, isVisible }) => (isVisible ? (
   <Grid container spacing={16}>
     {lunches.length < 1 && !isLoading ? (
       <Grid item xs={12}><NoLunches /></Grid>
@@ -21,16 +21,12 @@ const LunchList = ({ lunches, isLoading }) => (
         key={lunch.id}
         item
         xs={12}
-        sm={6}
-        md={6}
-        lg={4}
-        xl={3}
       >
         <LunchCard key={lunch.id} lunch={lunch} />
       </Grid>
     ))}
   </Grid>
-);
+) : null);
 
 
 export default LunchList;

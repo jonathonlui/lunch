@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
@@ -31,6 +30,15 @@ const styles = theme => ({
     width: '100vw',
     height: '100vh',
   },
+  title: {
+    padding: theme.spacing.unit,
+  },
+  textShadow: {
+    textShadow: '25px 25px 15px #888',
+  },
+  iconShadow: {
+    boxShadow: '25px 25px 20px #ccc',
+  },
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
@@ -49,14 +57,8 @@ const ReloadButton = withStyles(styles)(({
   ...buttonProps
 }) => (
   <Button disabled={isLoading} onClick={onClick} {...buttonProps}>
-    {isLoading ? (
-      <CircularProgress size={24} />
-    ) : (
-      <React.Fragment>
-        <RefreshIcon className={classes.leftIcon} />
-        Refresh
-      </React.Fragment>
-    )}
+    <RefreshIcon className={[classes.iconShadow, classes.leftIcon]} />
+    <span className={[classes.textShadow]}>Refresh</span>
   </Button>
 ));
 
@@ -96,11 +98,11 @@ class App extends Component {
         <CssBaseline />
         <div className={classes.App}>
           <LunchMap lunches={lunches} isLoading={isLoading}>
-            <Typography variant="h2" gutterBottom>
+            <Typography className={[classes.textShadow]} variant="h2" gutterBottom>
               Lunch
               <ReloadButton isLoading={isLoading} onClick={this.refresh} />
             </Typography>
-            <LunchList lunches={lunches} isLoading={isLoading} />
+            <LunchList lunches={lunches} isLoading={isLoading} isVisible={false} />
           </LunchMap>
         </div>
         <Snackbar
