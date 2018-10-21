@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
@@ -31,36 +32,29 @@ const styles = theme => ({
     height: '100vh',
   },
   title: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing.unit * 2,
   },
   textShadow: {
     textShadow: '25px 25px 15px #888',
   },
-  iconShadow: {
-    boxShadow: '25px 25px 20px #ccc',
-  },
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
-  floatingActionButton: {
+  floatingActionButtons: {
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    right: 0, // theme.spacing.unit * 2,
+  },
+  floatingActionButton: {
+    marginRight: theme.spacing.unit * 2,
+  },
+  floatingActionButtonProgress: {
+    position: 'absolute',
+    top: -4,
+    left: -4,
+    zIndex: 1,
   },
 });
-
-
-const ReloadButton = withStyles(styles)(({
-  isLoading,
-  onClick,
-  classes,
-  ...buttonProps
-}) => (
-  <Button disabled={isLoading} onClick={onClick} {...buttonProps}>
-    <RefreshIcon className={[classes.iconShadow, classes.leftIcon].join(',')} />
-    <span className={classes.textShadow}>Refresh</span>
-  </Button>
-));
 
 
 class App extends Component {
@@ -98,9 +92,8 @@ class App extends Component {
         <CssBaseline />
         <div className={classes.App}>
           <LunchMap lunches={lunches} isLoading={isLoading}>
-            <Typography className={classes.textShadow} variant="h2" gutterBottom>
+            <Typography className={[classes.textShadow, classes.title].join(' ')} variant="h3" gutterBottom>
               Lunch
-              <ReloadButton isLoading={isLoading} onClick={this.refresh} />
             </Typography>
             <LunchList lunches={lunches} isLoading={isLoading} isVisible={false} />
           </LunchMap>
@@ -126,15 +119,35 @@ class App extends Component {
             onClose={this.closeAddDialog}
             onSubmit={this.submitSuggestion}
           />
-          <Button
-            aria-label="Add"
-            variant="fab"
-            mini
-            className={classes.floatingActionButton}
-            onClick={this.openAddDialog}
-          >
-            <AddIcon />
-          </Button>
+          <div className={classes.floatingActionButtons}>
+            <div style={{ display: 'inline-block' }}>
+              <Button
+                aria-label="Refresh"
+                variant="fab"
+                mini
+                className={classes.floatingActionButton}
+                onClick={this.refresh}
+                disabled={isLoading}
+              >
+                <RefreshIcon />
+              </Button>
+              {isLoading && (
+                <CircularProgress
+                  size={48}
+                  className={classes.floatingActionButtonProgress}
+                />
+              )}
+            </div>
+            <Button
+              aria-label="Add"
+              variant="fab"
+              mini
+              className={classes.floatingActionButton}
+              onClick={this.openAddDialog}
+            >
+              <AddIcon />
+            </Button>
+          </div>
         </React.Fragment>
       </React.Fragment>
     );
