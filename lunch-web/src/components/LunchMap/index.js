@@ -37,6 +37,7 @@ const styles = {
     color: '#fff',
     background: 'rgba(54, 144, 192, 0.8)',
     padding: '2px 6px 4px',
+    border: 'none',
     borderRadius: 10,
     cursor: 'pointer',
     textAlign: 'left',
