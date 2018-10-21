@@ -17,23 +17,26 @@ const debug = require('debug/dist/debug')('lunch:LunchMap');
 const toLatLng = ({ location: { latitude, longitude } }) => [latitude, longitude];
 
 
+const LUNCH_OVERLAY_WIDTH = 125;
+
+
 const styles = {
   lunchOverlay: {
-    top: -11,
+    top: 0,
+    left: -LUNCH_OVERLAY_WIDTH / 2,
+    width: LUNCH_OVERLAY_WIDTH,
   },
   lunchOverlaySelected: {
     zIndex: 1,
 
     '& $lunchOverlayContents': {
       background: '#0570b0',
-      border: '1px solid #fff',
     },
   },
   lunchOverlayContents: {
     color: '#fff',
-    background: '#3690c0',
-    border: '1px solid #3690c0',
-    padding: 4,
+    background: 'rgba(54, 144, 192, 0.8)',
+    padding: '2px 6px 4px',
     borderRadius: 10,
     cursor: 'pointer',
     textAlign: 'left',
