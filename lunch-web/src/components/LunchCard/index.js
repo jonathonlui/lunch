@@ -85,7 +85,7 @@ const LunchCard = ({
     <CardMedia className={classes.image4x3} image={imageUrl} />
     <CardContent className={classes.CardContent}>
       {description && (
-        <Typography variant="body1" className={classes.Description}>
+        <Typography variant="body2" className={classes.Description}>
           {description}
         </Typography>
       )}

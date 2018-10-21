@@ -88,7 +88,7 @@ class App extends Component {
       <React.Fragment>
         <CssBaseline />
         <div className={classes.App}>
-          <Typography variant="display3" gutterBottom>
+          <Typography variant="h2" gutterBottom>
             Lunch
             <Button disabled={isLoading} onClick={this.refresh}>
               {isLoading
