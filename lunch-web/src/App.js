@@ -10,8 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import AddIcon from '@material-ui/icons/Add';
 
-import { PADDING_TOP } from './constants';
-
 import { getLunches } from './database';
 
 import LunchList from './components/LunchList';
@@ -24,10 +22,14 @@ const debug = require('debug/dist/debug')('lunch:App');
 
 const styles = theme => ({
   App: {
-    padding: 1 * theme.spacing.unit,
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     fontSize: '0.875rem',
     color: '#212121',
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: '100vw',
+    height: '100vh',
   },
   leftIcon: {
     marginRight: theme.spacing.unit,
@@ -40,18 +42,23 @@ const styles = theme => ({
 });
 
 
-const WrappedMap = props => (
-  <div
-    style={{
-      position: 'relative',
-      width: '100%',
-      height: 0,
-      paddingTop: PADDING_TOP['16x9'],
-    }}
-  >
-    <LunchMap {...props} />
-  </div>
-);
+const ReloadButton = withStyles(styles)(({
+  isLoading,
+  onClick,
+  classes,
+  ...buttonProps
+}) => (
+  <Button disabled={isLoading} onClick={onClick} {...buttonProps}>
+    {isLoading ? (
+      <CircularProgress size={24} />
+    ) : (
+      <React.Fragment>
+        <RefreshIcon className={classes.leftIcon} />
+        Refresh
+      </React.Fragment>
+    )}
+  </Button>
+));
 
 
 class App extends Component {
@@ -88,23 +95,13 @@ class App extends Component {
       <React.Fragment>
         <CssBaseline />
         <div className={classes.App}>
-          <Typography variant="h2" gutterBottom>
-            Lunch
-            <Button disabled={isLoading} onClick={this.refresh}>
-              {isLoading
-                ? <CircularProgress size={24} />
-                : (
-                  <React.Fragment>
-                    <RefreshIcon className={classes.leftIcon} />
-                    Refresh
-                  </React.Fragment>
-                )
-              }
-            </Button>
-          </Typography>
-
-          <WrappedMap lunches={lunches} isLoading={isLoading} />
-          <LunchList lunches={lunches} isLoading={isLoading} />
+          <LunchMap lunches={lunches} isLoading={isLoading}>
+            <Typography variant="h2" gutterBottom>
+              Lunch
+              <ReloadButton isLoading={isLoading} onClick={this.refresh} />
+            </Typography>
+            <LunchList lunches={lunches} isLoading={isLoading} />
+          </LunchMap>
         </div>
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
