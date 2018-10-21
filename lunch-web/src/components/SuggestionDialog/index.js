@@ -9,6 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+
 import { addSuggestion } from '../../database';
 
 
@@ -153,4 +155,4 @@ class SuggestionDialog extends Component {
   }
 }
 
-export default withStyles(styles)(SuggestionDialog);
+export default withMobileDialog()(withStyles(styles)(SuggestionDialog));
