@@ -1,3 +1,4 @@
+import 'inobounce'; // Disables scroll bounce and pinch zoom
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './css-reset.css';

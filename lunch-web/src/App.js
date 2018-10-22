@@ -30,6 +30,7 @@ const styles = theme => ({
     top: 0,
     width: '100vw',
     height: '100vh',
+    WebkitOverflowScrolling: 'touch',
   },
   title: {
     padding: theme.spacing.unit * 2,
