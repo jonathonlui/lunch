@@ -51,6 +51,7 @@ class SuggestionDialog extends Component {
       submitting: false,
       errors: {},
       suggestion: '',
+      fromEmail: '',
     });
   }
 
@@ -69,7 +70,7 @@ class SuggestionDialog extends Component {
     if (!formData.suggestion || formData.suggestion.trim().length < 1) {
       const newErrors = {
         suggestion: 'Required',
-      }
+      };
       debug('handleSubmit has errors', newErrors);
       this.setState({
         errors: newErrors,
@@ -103,6 +104,7 @@ class SuggestionDialog extends Component {
     const {
       suggestion,
       submitting,
+      fromEmail,
       errors,
     } = this.state;
     return (
@@ -119,6 +121,7 @@ class SuggestionDialog extends Component {
             <TextField
               disabled={submitting}
               autoFocus
+              required
               margin="dense"
               name="suggestion"
               type="text"
@@ -128,6 +131,16 @@ class SuggestionDialog extends Component {
               error={!!errors.suggestion}
               helperText={errors.suggestion}
               value={suggestion}
+              onChange={this.handleInputChange}
+            />
+            <TextField
+              disabled={submitting}
+              margin="dense"
+              name="fromEmail"
+              type="email"
+              label="Your Email"
+              fullWidth
+              value={fromEmail}
               onChange={this.handleInputChange}
             />
           </form>
