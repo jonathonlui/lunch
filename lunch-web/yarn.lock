@@ -6456,10 +6456,10 @@ pify@^3.0.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
   integrity sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
 
-pigeon-maps@^0.11.8:
-  version "0.11.8"
-  resolved "https://registry.yarnpkg.com/pigeon-maps/-/pigeon-maps-0.11.8.tgz#435be7a04338b4d930276d693741b5602ff1aedd"
-  integrity sha512-vm56ABiWjRr0t8Sw0xLjB8PJ07g4AW2W8j/+XneMvcKfnhPjeQRJSVU+UbQYU4QqYx2LY/hV7K8eKoImgvk4SA==
+pigeon-maps@0.11.3:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/pigeon-maps/-/pigeon-maps-0.11.3.tgz#e78d53fbc13e19aba491ad86896c94b49ed53689"
+  integrity sha512-4ivXkoM9IS9dJMfMdkqiG2enPugRXj/Zi1nr/HdsVP+a5wAxk5/Mqz9GZyFBYq2NQXzpi2TUbbAbhWWkRZh0zA==
   dependencies:
     eslint-plugin-import "^2.7.0"
     eslint-plugin-node "^5.2.0"

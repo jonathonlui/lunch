@@ -9,7 +9,7 @@
     "firebase": "^5.5.8",
     "geolib": "^2.0.24",
     "inobounce": "^0.1.6",
-    "pigeon-maps": "^0.11.8",
+    "pigeon-maps": "0.11.3",
     "pigeon-overlay": "^0.2.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
