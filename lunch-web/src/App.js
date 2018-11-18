@@ -2,19 +2,15 @@ import React, { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
-
-import RefreshIcon from '@material-ui/icons/Refresh';
-import AddIcon from '@material-ui/icons/Add';
 
 import { getLunches } from './database';
 
 import LunchList from './components/LunchList';
 import LunchMap from './components/LunchMap';
-import SuggestionDialog from './components/SuggestionDialog';
+import FloatingActionButtons from './components/FloatingActionButtons';
 
 
 const debug = require('debug/dist/debug')('lunch:App');
@@ -37,23 +33,6 @@ const styles = theme => ({
   },
   textShadow: {
     textShadow: '25px 25px 15px #888',
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-  },
-  floatingActionButtons: {
-    position: 'fixed',
-    bottom: theme.spacing.unit * 3,
-    right: 0, // theme.spacing.unit * 2,
-  },
-  floatingActionButton: {
-    marginRight: theme.spacing.unit * 2,
-  },
-  floatingActionButtonProgress: {
-    position: 'absolute',
-    top: -4,
-    left: -4,
-    zIndex: 1,
   },
 });
 
@@ -78,7 +57,6 @@ const ServiceWorkerUpdateSnackBar = ({ open }) => (
 
 class App extends Component {
   state = {
-    addDialogOpen: false,
     isLoading: true,
     lunches: [],
     selectedLunchId: null,
@@ -94,15 +72,6 @@ class App extends Component {
     const lunches = await getLunches();
     this.setState({ isLoading: false, lunches });
   };
-
-  openAddDialog = () => {
-    this.setState({ addDialogOpen: true });
-  };
-
-  closeAddDialog = () => {
-    debug('closeAddDialog');
-    this.setState({ addDialogOpen: false });
-  }
 
   onLunchClicked = (lunch) => {
     const {
@@ -121,7 +90,6 @@ class App extends Component {
   render() {
     const { classes, serviceWorkerUpdated } = this.props;
     const {
-      addDialogOpen,
       isLoading,
       lunches,
       selectedLunchId,
@@ -144,43 +112,7 @@ class App extends Component {
         </div>
 
         <ServiceWorkerUpdateSnackBar open={serviceWorkerUpdated} />
-
-        <React.Fragment>
-          <SuggestionDialog
-            open={addDialogOpen}
-            onClose={this.closeAddDialog}
-            onSubmit={this.submitSuggestion}
-          />
-          <div className={classes.floatingActionButtons}>
-            <div style={{ display: 'inline-block' }}>
-              <Button
-                aria-label="Refresh"
-                variant="fab"
-                mini
-                className={classes.floatingActionButton}
-                onClick={this.refresh}
-                disabled={isLoading}
-              >
-                <RefreshIcon />
-              </Button>
-              {isLoading && (
-                <CircularProgress
-                  size={48}
-                  className={classes.floatingActionButtonProgress}
-                />
-              )}
-            </div>
-            <Button
-              aria-label="Add"
-              variant="fab"
-              mini
-              className={classes.floatingActionButton}
-              onClick={this.openAddDialog}
-            >
-              <AddIcon />
-            </Button>
-          </div>
-        </React.Fragment>
+        <FloatingActionButtons isLoading={isLoading} refresh={this.refresh} />
       </React.Fragment>
     );
   }
