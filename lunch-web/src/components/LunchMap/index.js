@@ -46,7 +46,6 @@ const styles = {
 
 class LunchMap extends React.Component {
   state = {
-    selectedLunchId: null,
     zoom: 16,
     center: [34.048228325406804, -118.2508128624267],
     locations: [],
@@ -70,15 +69,10 @@ class LunchMap extends React.Component {
 
   onLunchClicked = (lunch) => {
     const {
-      selectedLunchId,
-    } = this.state;
-
-    if (selectedLunchId === lunch.id) {
-      debug('onLunchClicked unselect', lunch);
-      this.setState({ selectedLunchId: null });
-    } else {
-      debug('onLunchClicked select', lunch);
-      this.setState({ selectedLunchId: lunch.id });
+      onLunchClicked,
+    } = this.props;
+    if (onLunchClicked) {
+      onLunchClicked(lunch);
     }
   };
 
@@ -92,12 +86,12 @@ class LunchMap extends React.Component {
       classes,
       isLoading,
       children,
+      selectedLunchId,
     } = this.props;
     const {
       locations,
       center,
       zoom,
-      selectedLunchId,
     } = this.state;
     return (
       <div className={classes.LunchMap}>

@@ -63,6 +63,7 @@ class App extends Component {
     addDialogOpen: false,
     isLoading: true,
     lunches: [],
+    selectedLunchId: null,
   };
 
   componentDidMount() {
@@ -85,14 +86,38 @@ class App extends Component {
     this.setState({ addDialogOpen: false });
   }
 
+  onLunchClicked = (lunch) => {
+    const {
+      selectedLunchId,
+    } = this.state;
+
+    if (selectedLunchId === lunch.id) {
+      debug('onLunchClicked unselect', lunch);
+      this.setState({ selectedLunchId: null });
+    } else {
+      debug('onLunchClicked select', lunch);
+      this.setState({ selectedLunchId: lunch.id });
+    }
+  }
+
   render() {
     const { classes, serviceWorkerUpdated } = this.props;
-    const { addDialogOpen, isLoading, lunches } = this.state;
+    const {
+      addDialogOpen,
+      isLoading,
+      lunches,
+      selectedLunchId,
+    } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
         <div className={classes.App}>
-          <LunchMap lunches={lunches} isLoading={isLoading}>
+          <LunchMap
+            lunches={lunches}
+            isLoading={isLoading}
+            selectedLunchId={selectedLunchId}
+            onLunchClicked={this.onLunchClicked}
+          >
             <Typography className={[classes.textShadow, classes.title].join(' ')} variant="h3" gutterBottom>
               Lunch
             </Typography>
