@@ -58,6 +58,24 @@ const styles = theme => ({
 });
 
 
+const ServiceWorkerUpdateSnackBar = ({ open }) => (
+  <Snackbar
+    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    open={open}
+    message={(
+      <span>
+        App updated.
+      </span>
+    )}
+    action={(
+      <Button color="inherit" onClick={() => window.location.reload()}>
+        Reload App
+      </Button>
+    )}
+  />
+);
+
+
 class App extends Component {
   state = {
     addDialogOpen: false,
@@ -124,20 +142,8 @@ class App extends Component {
             <LunchList lunches={lunches} isLoading={isLoading} isVisible={false} />
           </LunchMap>
         </div>
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={serviceWorkerUpdated}
-          message={(
-            <span>
-              App updated.
-            </span>
-          )}
-          action={(
-            <Button color="inherit" onClick={() => window.location.reload()}>
-              Reload App
-            </Button>
-          )}
-        />
+
+        <ServiceWorkerUpdateSnackBar open={serviceWorkerUpdated} />
 
         <React.Fragment>
           <SuggestionDialog
