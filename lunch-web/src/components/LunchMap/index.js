@@ -3,12 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Map from 'pigeon-maps';
-import MapOverlay from 'pigeon-overlay';
 
 import MapCenterAndZoomToFit from '../MapCenterAndZoomToFit';
-
-
-import { getPriceRangeString } from '../LunchCard';
+import LunchMapOverlay from '../LunchMapOverlay';
 
 
 const debug = require('debug/dist/debug')('lunch:LunchMap');
@@ -17,30 +14,26 @@ const debug = require('debug/dist/debug')('lunch:LunchMap');
 const toLatLng = ({ location: { latitude, longitude } }) => [latitude, longitude];
 
 
-const LUNCH_OVERLAY_WIDTH = 125;
-
-
 const styles = {
-  lunchOverlay: {
+  LunchMap: {
+    position: 'absolute',
+    left: 0,
     top: 0,
-    left: -LUNCH_OVERLAY_WIDTH / 2,
-    width: LUNCH_OVERLAY_WIDTH,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#ccc',
   },
-  lunchOverlaySelected: {
-    zIndex: 1,
-
-    '& $lunchOverlayContents': {
-      background: '#0570b0',
-    },
+  LunchMapProgress: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    zIndex: 100,
+    width: '100%',
   },
-  lunchOverlayContents: {
-    color: '#fff',
-    background: 'rgba(54, 144, 192, 0.8)',
-    padding: '2px 6px 4px',
-    border: 'none',
-    borderRadius: 10,
-    cursor: 'pointer',
-    textAlign: 'left',
+  LunchMapChildrenContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
   },
 };
 
@@ -49,23 +42,6 @@ const styles = {
 //   const s = String.fromCharCode(97 + ((x + y + z) % 3));
 //   return `https://${s}.tile.openstreetmap.org/${z}/${x}/${y}.png`;
 // };
-
-
-const LunchOverlayContents = ({
-  classes,
-  onClick,
-  lunch: { meals, name },
-}) => (
-  <button
-    type="button"
-    className={classes.lunchOverlayContents}
-    onClick={onClick}
-  >
-    {getPriceRangeString(meals)}
-    {' '}
-    {name}
-  </button>
-);
 
 
 class LunchMap extends React.Component {
@@ -124,16 +100,7 @@ class LunchMap extends React.Component {
       selectedLunchId,
     } = this.state;
     return (
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: '#ccc',
-        }}
-      >
+      <div className={classes.LunchMap}>
         <Map
           center={center}
           zoom={zoom}
@@ -145,41 +112,21 @@ class LunchMap extends React.Component {
             locations={locations}
           />
           {lunches.map(lunch => (
-            <MapOverlay
+            <LunchMapOverlay
               key={lunch.id}
+              classes={classes}
               anchor={toLatLng(lunch)}
-              className={[
-                classes.lunchOverlay,
-                lunch.id === selectedLunchId ? classes.lunchOverlaySelected : undefined,
-              ].join(' ')}
-            >
-              <LunchOverlayContents
-                classes={classes}
-                lunch={lunch}
-                onClick={() => this.onLunchClicked(lunch)}
-              />
-            </MapOverlay>
+              lunch={lunch}
+              selected={lunch.id === selectedLunchId}
+              onClick={this.onLunchClicked}
+            />
           ))}
-          <div
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 0,
-            }}
-          >
+          <div className={classes.LunchMapChildrenContainer}>
             {children}
           </div>
         </Map>
         {isLoading && (
-          <LinearProgress
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 0,
-              zIndex: 100,
-              width: '100%',
-            }}
-          />
+          <LinearProgress className={classes.LunchMapProgress} />
         )}
       </div>
     );
