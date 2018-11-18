@@ -114,7 +114,6 @@ class LunchMap extends React.Component {
           {lunches.map(lunch => (
             <LunchMapOverlay
               key={lunch.id}
-              classes={classes}
               anchor={toLatLng(lunch)}
               lunch={lunch}
               selected={lunch.id === selectedLunchId}
