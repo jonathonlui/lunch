@@ -11,25 +11,60 @@ const styles = {
   lunchOverlay: {
     top: 0,
     left: -LUNCH_OVERLAY_WIDTH / 2,
-    width: LUNCH_OVERLAY_WIDTH,
+    maxWidth: LUNCH_OVERLAY_WIDTH,
   },
   lunchOverlaySelected: {
     zIndex: 1,
+    left: -LUNCH_OVERLAY_WIDTH,
+    maxWidth: LUNCH_OVERLAY_WIDTH * 2,
 
     '& $lunchOverlayContents': {
       background: '#0570b0',
+    },
+    '& $lunchOverlayTitle': {
+      fontWeight: 'bold',
     },
   },
   lunchOverlayContents: {
     color: '#fff',
     background: 'rgba(54, 144, 192, 0.8)',
-    padding: '2px 6px 4px',
+    padding: '2px 8px 4px',
     border: 'none',
-    borderRadius: 10,
+    borderRadius: 6,
     cursor: 'pointer',
     textAlign: 'left',
   },
+  lunchOverlayTitle: {
+  },
+  moreInfo: {
+    paddingBottom: 6,
+  },
+  moreInfoAddress: {
+    paddingTop: 12,
+  },
+  moreInfoMeals: {
+    paddingTop: 12,
+  },
+  moreInfoDescriptin: {
+    paddingTop: 12,
+  },
 };
+
+
+const MoreInfo = ({ classes, show, lunch }) => (show ? (
+  <div className={classes.moreInfo}>
+    {lunch.address && (
+      <div className={classes.moreInfoAddress}>
+        {lunch.address}
+      </div>
+    )}
+    {lunch.description && (
+      <div className={classes.moreInfoDescriptin}>
+        {lunch.description}
+      </div>
+    )}
+  </div>
+) : null);
 
 
 class LunchMapOverlay extends React.Component {
@@ -61,9 +96,12 @@ class LunchMapOverlay extends React.Component {
           className={classes.lunchOverlayContents}
           onClick={this.onClick}
         >
-          {getPriceRangeString(lunch.meals)}
-          {' '}
-          {lunch.name}
+          <div className={classes.lunchOverlayTitle}>
+            {getPriceRangeString(lunch.meals)}
+            {' '}
+            {lunch.name}
+          </div>
+          <MoreInfo classes={classes} show={selected} lunch={lunch} />
         </button>
       </MapOverlay>
     );
