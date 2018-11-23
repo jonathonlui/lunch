@@ -73,18 +73,14 @@ class App extends Component {
     this.setState({ isLoading: false, lunches });
   };
 
-  onLunchClicked = (lunch) => {
-    const {
-      selectedLunchId,
-    } = this.state;
+  onClick = ({ latLng, pixel }) => {
+    debug('onClick latLng: %o pixel: %o', latLng, pixel);
+    this.setState({ selectedLunchId: null });
+  }
 
-    if (selectedLunchId === lunch.id) {
-      debug('onLunchClicked unselect', lunch);
-      this.setState({ selectedLunchId: null });
-    } else {
-      debug('onLunchClicked select', lunch);
-      this.setState({ selectedLunchId: lunch.id });
-    }
+  onLunchClicked = (lunch) => {
+    debug('onLunchClicked select', lunch);
+    this.setState({ selectedLunchId: lunch.id });
   }
 
   render() {
@@ -102,6 +98,7 @@ class App extends Component {
             lunches={lunches}
             isLoading={isLoading}
             selectedLunchId={selectedLunchId}
+            onClick={this.onClick}
             onLunchClicked={this.onLunchClicked}
           >
             <Typography className={[classes.textShadow, classes.title].join(' ')} variant="h3" gutterBottom>

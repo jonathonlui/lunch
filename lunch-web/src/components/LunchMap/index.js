@@ -63,10 +63,6 @@ class LunchMap extends React.Component {
     this.setState({ center, zoom });
   }
 
-  onClick = ({ latLng, pixel }) => {
-    debug('onClick latLng: %o pixel: %o', latLng, pixel);
-  }
-
   onLunchClicked = (lunch) => {
     const {
       onLunchClicked,
@@ -87,6 +83,7 @@ class LunchMap extends React.Component {
       isLoading,
       children,
       selectedLunchId,
+      onClick,
     } = this.props;
     const {
       locations,
@@ -99,7 +96,7 @@ class LunchMap extends React.Component {
           center={center}
           zoom={zoom}
           onBoundsChanged={this.onBoundsChanged}
-          onClick={this.onClick}
+          onClick={onClick}
         >
           <MapCenterAndZoomToFit
             onCenterZoom={this.onCenterZoom}
