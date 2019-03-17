@@ -7,8 +7,6 @@ import AddIcon from '@material-ui/icons/Add';
 
 import SuggestionDialog from '../SuggestionDialog';
 
-const debug = require('debug/dist/debug')('lunch:FloatingActionButtons');
-
 
 const styles = theme => ({
   leftIcon: {
@@ -31,68 +29,58 @@ const styles = theme => ({
 });
 
 
-class FloatingActionButtons extends React.Component {
-  state = {
-    addDialogOpen: false,
-  }
+const useToggle = (state) => {
+  const [value, setValue] = React.useState(state);
+  const toggle = React.useMemo(() => {
+    const fn = () => setValue(!value);
+    fn.setTrue = () => setValue(true);
+    fn.setFalse = () => setValue(false);
+    return fn;
+  }, [setValue]);
+  return [value, toggle];
+};
 
-  openAddDialog = () => {
-    this.setState({ addDialogOpen: true });
-  };
 
-  closeAddDialog = () => {
-    debug('closeAddDialog');
-    this.setState({ addDialogOpen: false });
-  }
-
-  render() {
-    const {
-      classes,
-      refresh,
-      isLoading,
-    } = this.props;
-    const {
-      addDialogOpen,
-    } = this.state;
-    return (
-      <React.Fragment>
-        <SuggestionDialog
-          open={addDialogOpen}
-          onClose={this.closeAddDialog}
-        />
-        <div className={classes.floatingActionButtons}>
-          <div style={{ display: 'inline-block' }}>
-            <Fab
-              aria-label="Refresh"
-              variant="round"
-              size="small"
-              className={classes.floatingActionButton}
-              onClick={refresh}
-              disabled={isLoading}
-            >
-              <RefreshIcon />
-            </Fab>
-            {isLoading && (
-              <CircularProgress
-                size={48}
-                className={classes.floatingActionButtonProgress}
-              />
-            )}
-          </div>
+const FloatingActionButtons = ({ classes, refresh, isLoading }) => {
+  const [isDialogOpen, toggle] = useToggle(false);
+  return (
+    <>
+      <SuggestionDialog
+        open={isDialogOpen}
+        onClose={toggle.setFalse}
+      />
+      <div className={classes.floatingActionButtons}>
+        <div style={{ display: 'inline-block' }}>
           <Fab
-            aria-label="Add"
+            aria-label="Refresh"
             variant="round"
             size="small"
             className={classes.floatingActionButton}
-            onClick={this.openAddDialog}
+            onClick={refresh}
+            disabled={isLoading}
           >
-            <AddIcon />
+            <RefreshIcon />
           </Fab>
+          {isLoading && (
+            <CircularProgress
+              size={48}
+              className={classes.floatingActionButtonProgress}
+            />
+          )}
         </div>
-      </React.Fragment>
-    );
-  }
-}
+        <Fab
+          aria-label="Add"
+          variant="round"
+          size="small"
+          className={classes.floatingActionButton}
+          onClick={toggle.setTrue}
+        >
+          <AddIcon />
+        </Fab>
+      </div>
+    </>
+  );
+};
 
 
 export default withStyles(styles)(FloatingActionButtons);
