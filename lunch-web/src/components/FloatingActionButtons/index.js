@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import AddIcon from '@material-ui/icons/Add';
@@ -62,16 +62,16 @@ class FloatingActionButtons extends React.Component {
         />
         <div className={classes.floatingActionButtons}>
           <div style={{ display: 'inline-block' }}>
-            <Button
+            <Fab
               aria-label="Refresh"
-              variant="fab"
-              mini
+              variant="round"
+              size="small"
               className={classes.floatingActionButton}
               onClick={refresh}
               disabled={isLoading}
             >
               <RefreshIcon />
-            </Button>
+            </Fab>
             {isLoading && (
               <CircularProgress
                 size={48}
@@ -79,15 +79,15 @@ class FloatingActionButtons extends React.Component {
               />
             )}
           </div>
-          <Button
+          <Fab
             aria-label="Add"
-            variant="fab"
-            mini
+            variant="round"
+            size="small"
             className={classes.floatingActionButton}
             onClick={this.openAddDialog}
           >
             <AddIcon />
-          </Button>
+          </Fab>
         </div>
       </React.Fragment>
     );
