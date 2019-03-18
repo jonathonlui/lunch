@@ -82,7 +82,7 @@ class App extends Component<Props> {
     this.setState({ isLoading: false, lunches });
   };
 
-  onClick = ({ latLng, pixel }: { latLng: any, pixel: any }) => {
+  onClick = ({ latLng, pixel }: { latLng: NumberPair, pixel: NumberPair }) => {
     debug('onClick latLng: %o pixel: %o', latLng, pixel);
     this.setState({ selectedLunchId: null });
   }

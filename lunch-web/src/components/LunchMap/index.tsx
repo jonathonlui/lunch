@@ -42,7 +42,7 @@ interface Props extends WithStyles<typeof styles> {
   lunches: Lunch[];
   isLoading: boolean;
   selectedLunchId?: string;
-  onClick: (value: { latLng: any, pixel: any }) => void;
+  onClick: (value: { latLng: NumberPair, pixel: NumberPair }) => void;
   onLunchClicked: (lunch: Lunch) => void;
 }
 
