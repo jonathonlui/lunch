@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 
 import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
@@ -33,6 +36,12 @@ const styles = (theme: Theme) => createStyles({
   },
   textShadow: {
     textShadow: '25px 25px 15px #888',
+  },
+  referral: {
+    maxWidth: 200,
+    position: 'absolute',
+    left: 10,
+    bottom: 10,
   },
 });
 
@@ -118,6 +127,21 @@ class App extends Component<Props> {
         </div>
 
         <ServiceWorkerUpdateSnackBar open={!!serviceWorkerUpdated} />
+        <Card className={classes.referral}>
+          <CardContent>
+            <Typography variant="h6">
+              Sign Up for Ritual
+            </Typography>
+            <Typography>
+              Social ordering from your favorite local restaurants and coffee shops
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button color="primary" href="https://invite.ritual.co/JONATHON59445" target="_blank">
+              Learn More
+            </Button>
+          </CardActions>
+        </Card>
         <FloatingActionButtons isLoading={isLoading} refresh={this.refresh} />
       </React.Fragment>
     );
