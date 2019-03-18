@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
-import { withStyles } from '@material-ui/core/styles';
+import {
+  createStyles,
+  withStyles,
+  WithStyles,
+ } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,7 +21,7 @@ import { addSuggestion } from '../../database';
 const debug = require('debug/dist/debug')('lunch:SuggestionDialog');
 
 
-const styles = {
+const styles = () => createStyles({
   progressButtonWrapper: {
     position: 'relative',
   },
@@ -29,16 +33,22 @@ const styles = {
     marginTop: -12,
     marginLeft: -12,
   },
-};
+});
+
+interface Props extends WithStyles<typeof styles> {
+  onClose: () => void;
+  open: boolean;
+}
 
 
-class SuggestionDialog extends Component {
+class SuggestionDialog extends Component<Props> {
   state = {
     submitting: false,
     errors: {
       suggestion: false,
     },
     suggestion: '',
+    fromEmail: '',
   };
 
   componentDidMount() {
@@ -55,7 +65,7 @@ class SuggestionDialog extends Component {
     });
   }
 
-  handleInputChange = ({ target: { name, value } }) => {
+  handleInputChange = ({ currentTarget: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ [name]: value });
   }
 
@@ -168,4 +178,4 @@ class SuggestionDialog extends Component {
   }
 }
 
-export default withMobileDialog()(withStyles(styles)(SuggestionDialog));
+export default withStyles(styles)(withMobileDialog<Props>()(SuggestionDialog));

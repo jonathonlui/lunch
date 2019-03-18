@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -16,7 +16,7 @@ import FloatingActionButtons from './components/FloatingActionButtons';
 const debug = require('debug/dist/debug')('lunch:App');
 
 
-const styles = theme => ({
+const styles = (theme: Theme) => createStyles({
   App: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     fontSize: '0.875rem',
@@ -37,7 +37,7 @@ const styles = theme => ({
 });
 
 
-const ServiceWorkerUpdateSnackBar = ({ open }) => (
+const ServiceWorkerUpdateSnackBar = ({ open }: { open: boolean }) => (
   <Snackbar
     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     open={open}
@@ -55,11 +55,20 @@ const ServiceWorkerUpdateSnackBar = ({ open }) => (
 );
 
 
-class App extends Component {
-  state = {
+interface Props extends WithStyles<typeof styles> {
+  serviceWorkerUpdated?: boolean;
+}
+
+
+class App extends Component<Props> {
+  state: {
+    isLoading: boolean;
+    lunches: Lunch[];
+    selectedLunchId?: string;
+  } = {
     isLoading: true,
     lunches: [],
-    selectedLunchId: null,
+    selectedLunchId: undefined,
   };
 
   componentDidMount() {
@@ -73,12 +82,12 @@ class App extends Component {
     this.setState({ isLoading: false, lunches });
   };
 
-  onClick = ({ latLng, pixel }) => {
+  onClick = ({ latLng, pixel }: { latLng: any, pixel: any }) => {
     debug('onClick latLng: %o pixel: %o', latLng, pixel);
     this.setState({ selectedLunchId: null });
   }
 
-  onLunchClicked = (lunch) => {
+  onLunchClicked = (lunch: Lunch) => {
     debug('onLunchClicked select', lunch);
     this.setState({ selectedLunchId: lunch.id });
   }
@@ -108,7 +117,7 @@ class App extends Component {
           </LunchMap>
         </div>
 
-        <ServiceWorkerUpdateSnackBar open={serviceWorkerUpdated} />
+        <ServiceWorkerUpdateSnackBar open={!!serviceWorkerUpdated} />
         <FloatingActionButtons isLoading={isLoading} refresh={this.refresh} />
       </React.Fragment>
     );

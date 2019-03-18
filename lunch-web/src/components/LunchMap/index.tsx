@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Map from 'pigeon-maps';
@@ -11,10 +11,10 @@ import LunchMapOverlay from '../LunchMapOverlay';
 const debug = require('debug/dist/debug')('lunch:LunchMap');
 
 
-const toLatLng = ({ location: { latitude, longitude } }) => [latitude, longitude];
+const toLatLng = ({ location }: Lunch): NumberPair => [location!.latitude, location!.longitude];
 
 
-const styles = {
+const styles = createStyles({
   LunchMap: {
     position: 'absolute',
     left: 0,
@@ -35,7 +35,16 @@ const styles = {
     left: 0,
     top: 0,
   },
-};
+});
+
+
+interface Props extends WithStyles<typeof styles> {
+  lunches: Lunch[];
+  isLoading: boolean;
+  selectedLunchId?: string;
+  onClick: (value: { latLng: any, pixel: any }) => void;
+  onLunchClicked: (lunch: Lunch) => void;
+}
 
 
 // const openStreetMapProvider = (x, y, z) => {
@@ -44,26 +53,34 @@ const styles = {
 // };
 
 
-class LunchMap extends React.Component {
+class LunchMap extends React.Component<Props> {
   state = {
     zoom: 16,
     center: [34.048228325406804, -118.2508128624267],
     locations: [],
   };
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props: Props) {
     const { lunches } = props;
     return {
-      locations: lunches.map(({ location }) => location),
+      locations: lunches.map(({ location }: Lunch) => location),
     };
   }
 
-  onBoundsChanged = ({ bounds, center, zoom }) => {
+  onBoundsChanged = ({
+    bounds,
+    center,
+    zoom,
+  }: {
+    bounds: { ne: NumberPair, sw: NumberPair },
+    center: NumberPair,
+    zoom: number,
+  }) => {
     debug('onBoundsChanged bounds: %o center: %o zoom: %o', bounds, center, zoom);
     this.setState({ center, zoom });
   }
 
-  onLunchClicked = (lunch) => {
+  onLunchClicked = (lunch: Lunch) => {
     const {
       onLunchClicked,
     } = this.props;
@@ -72,7 +89,7 @@ class LunchMap extends React.Component {
     }
   };
 
-  onCenterZoom = ({ center, zoom }) => {
+  onCenterZoom = ({ center, zoom }: { center: NumberPair, zoom: number }) => {
     this.setState({ center, zoom });
   }
 

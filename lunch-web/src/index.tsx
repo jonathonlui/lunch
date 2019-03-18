@@ -6,17 +6,13 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 
-// eslint-disable-next-line no-underscore-dangle
-window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
-
-
 class ServiceWorkerUpdate extends React.Component {
   state = {
     serviceWorkerUpdated: false,
   };
 
   componentDidMount() {
-    registerServiceWorker().then(({ updated } = {}) => (
+    registerServiceWorker().then(({ updated }) => (
       this.setState({ serviceWorkerUpdated: updated })
     ));
   }

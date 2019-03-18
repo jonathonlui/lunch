@@ -1,5 +1,10 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import {
+  withStyles,
+  createStyles,
+  Theme,
+  WithStyles,
+} from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RefreshIcon from '@material-ui/icons/Refresh';
@@ -8,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import SuggestionDialog from '../SuggestionDialog';
 
 
-const styles = theme => ({
+const styles = (theme: Theme) => createStyles({
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
@@ -29,7 +34,18 @@ const styles = theme => ({
 });
 
 
-const useToggle = (state) => {
+interface ToggleFunction {
+  (): void;
+  setFalse: () => void;
+  setTrue: () => void;
+}
+
+type UseToggle = (state: boolean) => [
+  boolean,
+  ToggleFunction,
+];
+
+const useToggle: UseToggle = (state = false) => {
   const [value, setValue] = React.useState(state);
   const toggle = React.useMemo(() => {
     const fn = () => setValue(!value);
@@ -41,7 +57,13 @@ const useToggle = (state) => {
 };
 
 
-const FloatingActionButtons = ({ classes, refresh, isLoading }) => {
+interface Props extends WithStyles<typeof styles> {
+  refresh: () => void;
+  isLoading: boolean;
+}
+
+
+const FloatingActionButtons = ({ classes, refresh, isLoading }: Props) => {
   const [isDialogOpen, toggle] = useToggle(false);
   return (
     <>

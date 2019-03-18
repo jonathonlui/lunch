@@ -16,13 +16,13 @@ const isLocalhost = Boolean(window.location.hostname === 'localhost'
   || window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/));
 
 
-function registerValidSW(swUrl) {
+function registerValidSW(swUrl: string): Promise<boolean> {
   return new Promise(resolve => navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
       // eslint-disable-next-line no-param-reassign
       registration.onupdatefound = () => {
-        const installingWorker = registration.installing;
+        const installingWorker = registration.installing!;
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
@@ -42,13 +42,13 @@ function registerValidSW(swUrl) {
     .catch(error => console.error('Error during service worker registration:', error)));
 }
 
-function checkValidServiceWorker(swUrl) {
+function checkValidServiceWorker(swUrl: string) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl)
     .then(response => new Promise((resolve) => {
       // Ensure service worker exists, and that we really are getting a JS file.
       if (response.status === 404
-        || response.headers.get('content-type').indexOf('javascript') === -1) {
+        || response.headers.get('content-type')!.indexOf('javascript') === -1) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then((registration) => {
           registration.unregister().then(() => {
@@ -67,15 +67,15 @@ function checkValidServiceWorker(swUrl) {
 }
 
 
-export default function register() {
+export default function register(): Promise<{ updated: boolean }> {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
-    const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
+    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.toLocaleString());
     if (publicUrl.origin !== window.location.origin) {
       // Our service worker won't work if PUBLIC_URL is on a different origin
       // from what our page is served on. This might happen if a CDN is used to
       // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
-      return Promise.resolve({});
+      return Promise.resolve({ updated: false});
     }
 
     return new Promise((resolve) => {
@@ -88,7 +88,7 @@ export default function register() {
 
           // Add some additional logging to localhost, pointing developers to the
           // service worker/PWA documentation.
-          navigator.serviceWorker.ready.then(() => resolve({}));
+          navigator.serviceWorker.ready.then(() => resolve({ updated: false }));
         } else {
           // Is not local host. Just register service worker
           registerValidSW(swUrl).then(updated => resolve({ updated }));
@@ -96,7 +96,7 @@ export default function register() {
       });
     });
   }
-  return Promise.resolve({});
+  return Promise.resolve({ updated: false });
 }
 
 

@@ -14,7 +14,7 @@ export async function getLunches() {
 }
 
 
-export function addSuggestion(data) {
+export function addSuggestion(data?: any) {
   debug('addSuggestion', data);
   return db
     .collection('suggestions')

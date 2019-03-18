@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { createStyles, withStyles, WithStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -10,7 +10,7 @@ import placeholderImage4x3 from '../../assets/placeholder4x3.png';
 import { PADDING_TOP } from '../../constants';
 
 
-const styles = theme => ({
+const styles = (theme: Theme) => createStyles({
   Card: {
   },
   CardHeader: {
@@ -27,7 +27,7 @@ const styles = theme => ({
 });
 
 
-function toCurrency(value, defaultValue, { locale = 'en-US', currency = 'USD' } = {}) {
+function toCurrency(value: number, defaultValue?: string, { locale = 'en-US', currency = 'USD' } = {}) {
   if (!Number.isFinite(value)) {
     return defaultValue;
   }
@@ -35,7 +35,7 @@ function toCurrency(value, defaultValue, { locale = 'en-US', currency = 'USD' } 
 }
 
 
-const MealItem = ({ meal: { name, price } }) => (
+const MealItem = ({ meal: { name, price } }: { meal: Meal }) => (
   <li className="MealItem">
     <span className="MealItemName">{name}</span>
     <span className="MealItemPrice">{toCurrency(price)}</span>
@@ -43,17 +43,17 @@ const MealItem = ({ meal: { name, price } }) => (
 );
 
 
-export const MealList = ({ meals }) => (
+export const MealList = ({ meals }: { meals: Meal[]}) => (
   meals && meals.length
     ? (
       <ul className="LunchItemMealList">
-        {meals.map(meal => <MealItem key={meal.id || meal.name} meal={meal} />)}
+        {meals.map(meal => <MealItem key={meal.name} meal={meal} />)}
       </ul>
     ) : null
 );
 
 
-export const getPriceRangeString = (meals) => {
+export const getPriceRangeString = (meals: Meal[]) => {
   const prices = meals.map(({ price }) => price).sort((a, b) => a - b);
   const low = prices[0];
   const high = prices.slice(-1)[0];
@@ -61,6 +61,12 @@ export const getPriceRangeString = (meals) => {
     ? toCurrency(low)
     : `${toCurrency(low)} - ${toCurrency(high)}`;
 };
+
+
+interface Props extends WithStyles<typeof styles> {
+  lunch: Lunch;
+  style?: React.CSSProperties; 
+}
 
 
 const LunchCard = ({
@@ -75,7 +81,7 @@ const LunchCard = ({
   },
   classes,
   style,
-}) => (
+}: Props) => (
   <Card className={classes.Card} style={style}>
     <CardHeader
       className={classes.CardHeader}

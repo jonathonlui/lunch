@@ -1,13 +1,13 @@
 import React from 'react';
 import MapOverlay from 'pigeon-overlay';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles, WithStyles } from '@material-ui/core/styles';
 
 import { getPriceRangeString } from '../LunchCard';
 
 
 const LUNCH_OVERLAY_WIDTH = 125;
 
-const styles = {
+const styles = createStyles({
   lunchOverlay: {
     top: 0,
     left: -LUNCH_OVERLAY_WIDTH / 2,
@@ -45,13 +45,19 @@ const styles = {
   moreInfoMeals: {
     paddingTop: 12,
   },
-  moreInfoDescriptin: {
+  moreInfoDescription: {
     paddingTop: 12,
   },
-};
+});
 
 
-const MoreInfo = ({ classes, show, lunch }) => (show ? (
+interface MoreInfoProps extends WithStyles<typeof styles> {
+  show: boolean;
+  lunch: Lunch;
+
+}
+
+const MoreInfo = ({ classes, show, lunch }: MoreInfoProps) => (show ? (
   <div className={classes.moreInfo}>
     {lunch.address && (
       <div className={classes.moreInfoAddress}>
@@ -59,7 +65,7 @@ const MoreInfo = ({ classes, show, lunch }) => (show ? (
       </div>
     )}
     {lunch.description && (
-      <div className={classes.moreInfoDescriptin}>
+      <div className={classes.moreInfoDescription}>
         {lunch.description}
       </div>
     )}
@@ -67,7 +73,15 @@ const MoreInfo = ({ classes, show, lunch }) => (show ? (
 ) : null);
 
 
-class LunchMapOverlay extends React.Component {
+interface Props extends WithStyles<typeof styles> {
+  lunch: Lunch;
+  selected: boolean;
+  onClick: (lunch: Lunch) => void;
+  anchor: NumberPair;
+}
+
+
+class LunchMapOverlay extends React.Component<Props> {
   onClick = () => {
     const {
       lunch,
