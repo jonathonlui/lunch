@@ -119,7 +119,7 @@ class LunchMap extends React.Component<Props> {
             onCenterZoom={this.onCenterZoom}
             locations={locations}
           />
-          {lunches.map(lunch => (
+          {lunches.filter(l => l.location).map(lunch => (
             <LunchMapOverlay
               key={lunch.id}
               anchor={toLatLng(lunch)}
