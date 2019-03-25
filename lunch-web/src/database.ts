@@ -1,4 +1,4 @@
-import firebase, { db } from './firebase';
+import firebase from './firebase';
 
 
 const debug = require('debug/dist/debug')('lunch:database');
@@ -6,7 +6,7 @@ const debug = require('debug/dist/debug')('lunch:database');
 
 export async function getLunches() {
   debug('getLunches');
-  const { docs } = await db
+  const { docs } = await firebase.firestore()
     .collection('lunches')
     .where('meals', '>', []) // Only get lunches that have meals
     .get();
@@ -16,7 +16,7 @@ export async function getLunches() {
 
 export function addSuggestion(data?: any) {
   debug('addSuggestion', data);
-  return db
+  return firebase.firestore()
     .collection('suggestions')
     .add({
       ...data,
