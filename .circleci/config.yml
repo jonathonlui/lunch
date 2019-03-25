@@ -6,7 +6,7 @@ jobs:
     working_directory: ~/repo/lunch-web
     steps:
       - checkout:
-        path: ~/repo
+          path: ~/repo
       - restore_cache:
           key: npm-cache-v1-{{ checksum "yarn.lock" }}
       - run:
