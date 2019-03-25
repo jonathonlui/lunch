@@ -1,7 +1,12 @@
 import React from 'react';
 import { render } from 'react-testing-library';
 import App from './App';
+import { getLunches } from './database';
 
-it('renders without crashing', () => {
-  render(<App />);
+jest.mock('./database');
+
+describe('<App>', () => {
+  it('renders without crashing', () => {
+    render(<App />);
+  });
 });
