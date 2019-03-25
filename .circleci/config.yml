@@ -51,6 +51,6 @@ workflows:
   build_deploy:
     jobs:
       - build-web
-      - deploy
+      - deploy:
           requires:
             - build-web
