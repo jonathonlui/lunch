@@ -28,5 +28,5 @@ jobs:
             - lunch-web/build
 workflows:
   version: 2
-    build_deploy:
-      - build-web
+  build_deploy:
+    - build-web
