@@ -1,8 +1,8 @@
 const createLunchData = ({
-  id,
+  id = 0,
   name = '',
-  lat,
-  lng,
+  lat = 0,
+  lng = 0,
   ...rest
 }) => ({
   id: `mock-lunch-id-${id}`,
