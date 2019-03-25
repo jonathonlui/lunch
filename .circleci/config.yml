@@ -26,8 +26,31 @@ jobs:
           root: ~/repo
           paths:
             - lunch-web/build
+  deploy:
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/repo/
+    steps:
+      - checkout:
+          path: ~/repo
+      - restore_cache:
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - save_cache:
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - attach_workspace:
+          at: ~/repo
+      - run: ls ~/repo/lunch-web/build
+
 workflows:
   version: 2
   build_deploy:
     jobs:
       - build-web
+      - deploy
+          requires:
+            - build-web
