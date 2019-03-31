@@ -1,7 +1,7 @@
 
 type NumberPair = [number, number];
 
-interface Location {
+interface GeoLocation {
   latitude: number;
   longitude: number;
 }
@@ -17,7 +17,7 @@ interface Lunch {
   address?: string;
   description?: string;
   meals: Meal[];
-  location?: Location;
+  location?: GeoLocation;
   yelpLink?: string;
   imageUrl?: string;
 }
