@@ -13,13 +13,13 @@ const NoLunches = () => (
 
 
 interface Props {
-  isVisible: boolean;
-  isLoading: boolean;
-  lunches: Lunch[];
+  isVisible?: boolean;
+  isLoading?: boolean;
+  lunches?: Lunch[];
 }
 
 
-const LunchList = ({ lunches, isLoading, isVisible }: Props) => (isVisible ? (
+const LunchList = ({ lunches = [], isLoading = false, isVisible = true }: Props) => (isVisible ? (
   <Grid container spacing={16}>
     {lunches.length < 1 && !isLoading ? (
       <Grid item xs={12}><NoLunches /></Grid>
