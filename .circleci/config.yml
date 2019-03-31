@@ -46,7 +46,7 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: Deploy App
-          command: yarn firebase deploy --token "$FIREBASE_TOKEN"
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --non-interactive --force
 
 workflows:
   version: 2
