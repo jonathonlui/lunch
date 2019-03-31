@@ -37,12 +37,6 @@ const styles = (theme: Theme) => createStyles({
   textShadow: {
     textShadow: '25px 25px 15px #888',
   },
-  referral: {
-    maxWidth: 200,
-    position: 'absolute',
-    left: 10,
-    bottom: 10,
-  },
 });
 
 
@@ -127,21 +121,6 @@ class App extends Component<Props> {
         </div>
 
         <ServiceWorkerUpdateSnackBar open={!!serviceWorkerUpdated} />
-        <Card className={classes.referral}>
-          <CardContent>
-            <Typography variant="h6">
-              Sign Up for Ritual
-            </Typography>
-            <Typography>
-              Social ordering from your favorite local restaurants and coffee shops
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button color="primary" href="https://invite.ritual.co/JONATHON59445" target="_blank">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
         <FloatingActionButtons isLoading={isLoading} refresh={this.refresh} />
       </React.Fragment>
     );
