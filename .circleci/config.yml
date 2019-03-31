@@ -11,7 +11,7 @@ jobs:
           key: npm-cache-v1-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: yarn install
+          command: yarn install --frozen-lockfile
       - save_cache:
           key: npm-cache-v1-{{ checksum "yarn.lock" }}
           paths:
@@ -35,7 +35,18 @@ jobs:
           path: ~/repo
       - attach_workspace:
           at: ~/repo
-      - run: ls ~/repo/lunch-web/build
+      - restore_cache:
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Deploy App
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN"
 
 workflows:
   version: 2
@@ -45,3 +56,6 @@ workflows:
       - deploy:
           requires:
             - build-web
+           filters:
+              branches:
+                only: master

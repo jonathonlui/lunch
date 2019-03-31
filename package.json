@@ -1,0 +1,9 @@
+{
+  "name": "Lunch",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "firebase-tools": "^6.5.0"
+  }
+}
