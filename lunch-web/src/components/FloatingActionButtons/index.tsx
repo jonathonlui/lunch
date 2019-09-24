@@ -48,7 +48,7 @@ type UseToggle = (state: boolean) => [
 const useToggle: UseToggle = (state = false) => {
   const [value, setValue] = React.useState(state);
   const toggle = React.useMemo(() => {
-    const fn = () => setValue(!value);
+    const fn = () => setValue(v => !v);
     fn.setTrue = () => setValue(true);
     fn.setFalse = () => setValue(false);
     return fn;
