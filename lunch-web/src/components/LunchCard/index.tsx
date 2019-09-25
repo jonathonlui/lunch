@@ -18,7 +18,7 @@ const styles = (theme: Theme) => createStyles({
   CardContent: {
   },
   Description: {
-    marginBottom: 1.5 * theme.spacing.unit,
+    marginBottom: theme.spacing(1.5),
   },
   image4x3: {
     height: 0,

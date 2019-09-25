@@ -29,7 +29,7 @@ const styles = (theme: Theme) => createStyles({
     WebkitOverflowScrolling: 'touch',
   },
   title: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   textShadow: {
     textShadow: '25px 25px 15px #888',

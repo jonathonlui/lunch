@@ -20,7 +20,7 @@ interface Props {
 
 
 const LunchList = ({ lunches = [], isLoading = false, isVisible = true }: Props) => (isVisible ? (
-  <Grid container spacing={16}>
+  <Grid container spacing={2}>
     {lunches.length < 1 && !isLoading ? (
       <Grid item xs={12}><NoLunches /></Grid>
     ) : lunches.map(lunch => (

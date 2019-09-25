@@ -15,15 +15,15 @@ import SuggestionDialog from '../SuggestionDialog';
 
 const styles = (theme: Theme) => createStyles({
   leftIcon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   },
   floatingActionButtons: {
     position: 'fixed',
-    bottom: theme.spacing.unit * 3,
-    right: 0, // theme.spacing.unit * 2,
+    bottom: theme.spacing(3),
+    right: 0, // theme.spacing(2),
   },
   floatingActionButton: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2),
   },
   floatingActionButtonProgress: {
     position: 'absolute',
