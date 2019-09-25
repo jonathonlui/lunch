@@ -7962,10 +7962,10 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-pigeon-maps@^0.12.0:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/pigeon-maps/-/pigeon-maps-0.12.1.tgz#cb9b696f61734ef76bcf1c3dea1bc5076010bac2"
-  integrity sha512-JeK3f3kpmQnvmC4P45TN0g8UbkAJqH3sjfn6nK309sTMWaPsWBYdO0XRWHO6loQ/MASdY8DvkQIu9BQV+dlqvg==
+pigeon-maps@0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/pigeon-maps/-/pigeon-maps-0.14.0.tgz#af5bc3fd32e701451db1ac999ec0eef5d89b1d61"
+  integrity sha512-ee7yceJpRH3Jpb5iooYn0oqykNs18P3zjO7zKvq+9nf109QoiYx9b6Tniy8LxxpG83uDez0+DrGJOOHiW7gXnw==
 
 pigeon-overlay@^0.2.2:
   version "0.2.3"
@@ -10539,10 +10539,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.3.3333:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.1.tgz#b6691be11a881ffa9a05765a205cb7383f3b63c6"
-  integrity sha512-3NSMb2VzDQm8oBTLH6Nj55VVtUEpe/rgkIzMir0qVoLyjDZlnMBva0U6vDiV3IH+sl/Yu6oP5QwsAQtHPmDd2Q==
+typescript@^3.6.0:
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.3.tgz#fea942fabb20f7e1ca7164ff626f1a9f3f70b4da"
+  integrity sha512-N7bceJL1CtRQ2RiG0AQME13ksR7DiuQh/QehubYcghzv20tnh+MQnQIuJddTmsbqYj+dztchykemz0zFzlvdQw==
 
 uglify-js@3.4.x, uglify-js@^3.1.4:
   version "3.4.10"
