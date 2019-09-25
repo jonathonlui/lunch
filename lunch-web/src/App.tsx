@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
@@ -32,7 +29,7 @@ const styles = (theme: Theme) => createStyles({
     WebkitOverflowScrolling: 'touch',
   },
   title: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   textShadow: {
     textShadow: '25px 25px 15px #888',

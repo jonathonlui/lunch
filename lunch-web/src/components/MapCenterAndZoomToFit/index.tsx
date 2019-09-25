@@ -1,6 +1,6 @@
 import React from 'react';
 
-import geolib from 'geolib';
+import * as geolib from 'geolib';
 
 
 const debug = require('debug/dist/debug')('lunch:MapCenterAndZoomToFit');
@@ -58,16 +58,21 @@ export default class MapCenterAndZoomToFit extends React.Component<Props> {
     const locationsAsPlainObjects = locations
       .map(({ latitude, longitude }) => ({ latitude, longitude }));
 
-    const { latitude, longitude } = geolib.getCenter(locationsAsPlainObjects);
-    const center: NumberPair = [Number.parseFloat(`${latitude}`), Number.parseFloat(`${longitude}`)];
-    // Zoom out until all elements are visible in map
-    let zoom = 18;
+    const geoCenter = geolib.getCenter(locationsAsPlainObjects);
+    if (geoCenter) {
+      const { latitude, longitude } = geoCenter;
+      const center: NumberPair = [Number.parseFloat(`${latitude}`), Number.parseFloat(`${longitude}`)];
+      // Zoom out until all elements are visible in map
+      let zoom = 18;
 
-    while (!locations.every(this.isInside(center, zoom)) && zoom > 1) {
-      zoom -= 1;
+      while (!locations.every(this.isInside(center, zoom)) && zoom > 1) {
+        zoom -= 1;
+      }
+      debug('CenterAndZoomToFit.onResize: center: %o zoom: %o', center, zoom);
+      onCenterZoom({ center, zoom });
+    } else {
+      debug(`CenterAndZoomToFit.onResize: getCenter(${locationsAsPlainObjects}) returned false`);
     }
-    debug('CenterAndZoomToFit.onResize: center: %o zoom: %o', center, zoom);
-    onCenterZoom({ center, zoom });
   }
 
   render() {
