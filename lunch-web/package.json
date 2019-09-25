@@ -13,7 +13,7 @@
     "debug": "^4.0.1",
     "firebase": "6.6.2",
     "geolib": "^3.0.0",
-    "inobounce": "^0.1.6",
+    "inobounce": "^0.2.0",
     "pigeon-maps": "0.14.0",
     "pigeon-overlay": "^0.2.2",
     "react": "^16.9.0",
